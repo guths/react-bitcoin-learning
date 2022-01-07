@@ -10,9 +10,9 @@ export default function QuotationItem(){
                     <Image style={styles.logBitcoin} source={require('../../../img/bitcoin.png')} />
                     <Text style={styles.dayCotation}>07/05/2021</Text>
                 </View>
-                <View style={styles.contextRight}>
-                    <Text style={styles.price}>$53443</Text>
-                </View>
+            </View>
+            <View style={styles.contextRight}>
+                <Text style={styles.price}>$53443</Text>
             </View>
         </View>
     );
