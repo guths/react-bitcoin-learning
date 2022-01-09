@@ -15,12 +15,13 @@ function addZero(number) {
 
 function url(qtdDays) {
     const date = new Date();
+    console.log(date.getDay());
     const listLastDays = qtdDays;
     const endDate = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDay())}`;
     date.setDate(date.getDate() - listLastDays)
     const startDate = `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDay())}`;
-    console.log(startDate)
-    return `https://api.coindesk.com/v1/bpi/historical/close.json?start=${endDate}&end=${startDate}`
+    console.log(startDate, listLastDays)
+    return `https://api.coindesk.com/v1/bpi/historical/close.json?start=${startDate}&end=${endDate}`
 }
 
 async function getListCoin(url) {
@@ -29,8 +30,8 @@ async function getListCoin(url) {
     let selectListQuotations = returnApi.bpi;
     const queryCoinsList = Object.keys(selectListQuotations).map((key) => {
         return {
-            data: key.split('-').reverse().join(),
-            valor: selectListQuotations[key]
+            data: key.split('-').reverse().join('/'),
+            value: selectListQuotations[key]
         }
     })
     return queryCoinsList.reverse();
@@ -41,7 +42,7 @@ async function getPriceCoinsGraphic(url) {
     let returnApiG = await responseG.json();
     let selectListQuotationsG = returnApiG.bpi;
     return Object.keys(selectListQuotationsG).map((key) => {
-        selectListQuotationsG[key]
+        return selectListQuotationsG[key]
     });
 }
 
@@ -75,8 +76,7 @@ export default function App() {
             <StatusBar style="auto" backgroundColor="#f50d41" barStyle="dark-content"/>
             <CurrentPrice/>
             <HistoryGraphic/>
-            <QuotationsList/>
-            <QuotationItem/>
+            <QuotationsList filterDay={updateDay} listTransactions={coinsList}/>
         </SafeAreaView>
     );
 }
